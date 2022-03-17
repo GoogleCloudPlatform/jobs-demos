@@ -4,7 +4,7 @@
 
 This repository contains a collection of samples for Jobs for various use cases.
 
-## Samples
+## Sample Index
 
 |          Sample            |                     Description                         |
 | -------------------------- | ------------------------------------------------------- | 
