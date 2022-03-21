@@ -62,7 +62,7 @@ async function uploadImage(bucket, taskIndex, imageBuffer) {
 async function main(urls) {
   console.log(`Passed in urls: ${urls}`);
 
-  const taskIndex = process.env.TASK_NUM || 0;
+  const taskIndex = process.env.CLOUD_RUN_TASK_INDEX || 0;
   const url = urls[taskIndex];
   if (!url) {
     throw new Error(
