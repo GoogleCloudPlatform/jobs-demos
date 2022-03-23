@@ -8,14 +8,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/steren/user-journeys-demo.git"
+    "url": "git+https://github.com/GoogleCloudPlatform/jobs-demos.git"
   },
   "author": "Steren Giannini <steren@google.com>",
   "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/steren/user-journeys-demo/issues"
+    "url": "https://github.com/GoogleCloudPlatform/jobs-demos/issues"
   },
-  "homepage": "https://github.com/steren/user-journeys-demo#readme",
+  "homepage": "https://github.com/GoogleCloudPlatform/jobs-demos/tree/main/user-journeys#readme",
   "dependencies": {
     "@puppeteer/replay": "^0.0.2",
     "puppeteer": "^13.4.1"
