@@ -14,6 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+export PROJECT_ID=$(gcloud config get-value project)
 
 # Choose us-central1 if REGION is not defined.
 export REGION=${REGION:=us-central1}
