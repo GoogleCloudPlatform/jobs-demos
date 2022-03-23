@@ -1,0 +1,85 @@
+{
+  "title": "cloud-run",
+  "steps": [
+    {
+      "type": "setViewport",
+      "width": 1237,
+      "height": 721,
+      "deviceScaleFactor": 1,
+      "isMobile": false,
+      "hasTouch": false,
+      "isLandscape": false
+    },
+    {
+      "type": "navigate",
+      "url": "https://cloud.google.com/",
+      "assertedEvents": [
+        {
+          "type": "navigation",
+          "url": "https://cloud.google.com/",
+          "title": "Cloud Computing Services  |  Google Cloud"
+        }
+      ]
+    },
+    {
+      "type": "click",
+      "selectors": [
+        [
+          "aria/Products"
+        ],
+        [
+          "body > section > devsite-header > div > div.devsite-top-logo-row-wrapper-wrapper > div > div > div.devsite-top-logo-row-middle > div.devsite-header-upper-tabs > cloudx-tabs-nav > nav > tab:nth-child(3) > a.gc-analytics-event"
+        ]
+      ],
+      "target": "main",
+      "offsetX": 45.09375,
+      "offsetY": 21
+    },
+    {
+      "type": "click",
+      "selectors": [
+        [
+          "body > section > devsite-header > div > div.devsite-top-logo-row-wrapper-wrapper > div > div > div.devsite-top-logo-row-middle > div.devsite-header-upper-tabs > cloudx-tabs-nav > nav > tab:nth-child(3) > div > div.devsite-tabs-dropdown-content > div:nth-child(1) > ul:nth-child(11) > li > a > div.devsite-nav-item-title"
+        ]
+      ],
+      "target": "main",
+      "offsetX": 33,
+      "offsetY": 9,
+      "assertedEvents": [
+        {
+          "type": "navigation",
+          "url": "https://cloud.google.com/run",
+          "title": ""
+        }
+      ]
+    },
+    {
+      "type": "click",
+      "selectors": [
+        [
+          "aria/View all features"
+        ],
+        [
+          "#section-2 > div > div:nth-child(2) > div.cws-grid__col--span-8 > a"
+        ]
+      ],
+      "target": "main",
+      "offsetX": 91,
+      "offsetY": 26
+    },
+    {
+      "type": "click",
+      "selectors": [
+        [
+          "aria/View pricing details"
+        ],
+        [
+          "#section-14 > div > div.pricing-module__pricing-cta > a"
+        ]
+      ],
+      "target": "main",
+      "offsetX": 126,
+      "offsetY": 28.33331298828125
+    }
+  ]
+}

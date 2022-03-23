@@ -6,9 +6,10 @@ This repository contains a collection of samples for Jobs for various use cases.
 
 ## Samples
 
-|          Sample            |                     Description                         |
-| -------------------------- | ------------------------------------------------------- | 
-| [Screenshot](./screenshot/)| Create a Cloud Run job to take screenshots of web pages.| 
+|          Sample                          |                     Description                                 |
+| ---------------------------------------- | --------------------------------------------------------------- | 
+| [Screenshot](./screenshot/)              | Create a Cloud Run job to take screenshots of web pages.        | 
+| [User Journey Replayer](./user-journeys/)| Replay recorded user journeys of your website on Cloud Run jobs.| 
 
 ## Contributing changes
 
