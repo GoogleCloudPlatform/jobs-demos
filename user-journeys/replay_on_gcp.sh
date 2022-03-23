@@ -14,8 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-DIR="$(dirname "$0")"
-. "${DIR}/config"
+export REGION=${REGION:=us-central1}
 
 echo "Replaying on Google Cloud"
 
