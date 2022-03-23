@@ -14,6 +14,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+
+# Choose us-central1 if REGION is not defined.
 export REGION=${REGION:=us-central1}
 
 echo "Replaying every day"
