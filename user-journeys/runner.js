@@ -20,12 +20,8 @@ if(replays.length === 0) {
 let taskIndex = 0;
 
 // If this container is running as a Cloud Run job execution
-if(process.env.CLOUD_RUN_JOB || process.env.CR_JOB) {
-  if(process.env.CLOUD_RUN_TASK_INDEX) {
-    taskIndex = parseInt(process.env.CLOUD_RUN_TASK_INDEX, 10);
-  } else if (process.env.TASK_INDEX) {
-    taskIndex = parseInt(process.env.TASK_INDEX, 10);
-  }
+if(process.env.CLOUD_RUN_JOB) {
+  taskIndex = parseInt(process.env.CLOUD_RUN_TASK_INDEX, 10);
 }
 
 if(taskIndex > replays.length) {
