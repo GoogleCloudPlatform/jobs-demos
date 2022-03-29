@@ -14,8 +14,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-DIR="$(dirname "$0")"
-. "${DIR}/config"
+export PROJECT_ID=$(gcloud config get-value project)
+
+# Choose us-central1 if REGION is not defined.
+export REGION=${REGION:=us-central1}
 
 echo "Replaying every day"
 
@@ -29,6 +31,7 @@ gcloud projects add-iam-policy-binding ${PROJECT_ID} \
 
 echo "Create a Cloud Scheduler Job that will run the Cloud Run Job everyday"
 gcloud scheduler jobs create http job-runner \
+    --location "${REGION}" \
     --schedule='0 12 * * *' \
     --uri=https://${REGION}-run.googleapis.com/apis/run.googleapis.com/v1/namespaces/${PROJECT_ID}/jobs/user-journeys-demo:run \
     --message-body='' \
@@ -36,4 +39,4 @@ gcloud scheduler jobs create http job-runner \
     --oauth-token-scope=https://www.googleapis.com/auth/cloud-platform
 
 echo "Test that Cloud Scheduler can correctly run the Cloud Run job"
-gcloud scheduler jobs run job-runner
+gcloud scheduler jobs run job-runner --location "${REGION}"

@@ -12,6 +12,10 @@ This demo shows how to replay recorded user journeys of your website on Cloud Ru
 
 1. Install the [`gcloud` command line](https://cloud.google.com/sdk/docs/install).
 1. Create a Google Cloud project.
+1. Set your current project in `gcloud`: 
+```
+gcloud config set project PROJECT_ID
+```
 
 ## Replaying on Google Cloud
 

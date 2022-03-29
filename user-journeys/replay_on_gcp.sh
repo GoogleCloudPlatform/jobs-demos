@@ -14,12 +14,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-DIR="$(dirname "$0")"
-. "${DIR}/config"
+export PROJECT_ID=$(gcloud config get-value project)
+
+# Choose us-central1 if REGION is not defined.
+export REGION=${REGION:=us-central1}
 
 echo "Replaying on Google Cloud"
 
-echo "Configure your local `gcloud` to use your project and a region to use for Cloud Run"
+echo "Configure your local gcloud to use your project and a region to use for Cloud Run"
 gcloud config set project ${PROJECT_ID}
 gcloud config set run/region ${REGION}
 
