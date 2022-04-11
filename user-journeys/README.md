@@ -20,7 +20,8 @@ gcloud config set project PROJECT_ID
 ## Replaying on Google Cloud
 
 Run `./replay_on_gcp.sh` to setup and run a Cloud Run job to replay critical
-user journeys. See [replay_on_gcp.sh](replay_on_gcp.sh) for details.
+user journeys in multiple tasks. The number of user journeys must match the
+number of tasks. See [replay_on_gcp.sh](replay_on_gcp.sh) for details.
 
 ## Replaying every day
 

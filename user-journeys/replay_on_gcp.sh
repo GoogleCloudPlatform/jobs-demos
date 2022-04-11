@@ -21,6 +21,9 @@ export REGION=${REGION:=us-central1}
 
 echo "Replaying on Google Cloud"
 
+no_of_journeys=$(ls journeys/ | wc -l)
+echo "Number of journeys: $no_of_journeys"
+
 echo "Configure your local gcloud to use your project and a region to use for Cloud Run"
 gcloud config set project ${PROJECT_ID}
 gcloud config set run/region ${REGION}
@@ -39,6 +42,7 @@ gcloud iam service-accounts create no-permission --description="No IAM permissio
 
 echo "Create a Cloud Run job"
 gcloud alpha run jobs create user-journeys-demo \
+  --tasks $no_of_journeys \
   --image us-central1-docker.pkg.dev/${PROJECT_ID}/containers/user-journeys-demo:latest \
   --service-account no-permission@${PROJECT_ID}.iam.gserviceaccount.com
 
