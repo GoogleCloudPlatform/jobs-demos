@@ -43,4 +43,4 @@ gcloud alpha run jobs create user-journeys-demo \
   --service-account no-permission@${PROJECT_ID}.iam.gserviceaccount.com
 
 echo "Run the Cloud Run job"
-gcloud alpha run jobs run user-journeys-demo
+gcloud alpha run jobs execute user-journeys-demo
