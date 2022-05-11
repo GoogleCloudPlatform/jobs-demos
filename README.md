@@ -10,10 +10,11 @@ This repository contains a collection of samples for Jobs for various use cases.
 | ---------------------------------------- | --------------------------------------------------------------- | 
 | [Screenshot](./screenshot/)              | Create a Cloud Run job to take screenshots of web pages.        | 
 | [User Journey Replayer](./user-journeys/)| Replay recorded user journeys of your website on Cloud Run jobs.| 
+| [Invoice Processing](./invoice-processing-pipeline/)| Process invoices nightly.| 
 
 ## Contributing changes
 
-Entirely new samples are not accepted. Bug fixes are welcome, either as pull
+Bug fixes are welcome, either as pull
 requests or as GitHub issues.
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for details on how to contribute.

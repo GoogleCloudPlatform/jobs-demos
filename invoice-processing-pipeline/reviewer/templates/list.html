@@ -1,0 +1,83 @@
+<!DOCTYPE html5>
+<html>
+    <head>
+        <style>
+            .date, .number {
+                text-align: right;
+            }
+
+            .fixed {
+                text-align: center;
+            }
+
+            table {
+                table-layout: fixed;
+                border-collapse: collapse;
+                border: 3px solid black;
+            }
+            thead {
+                font-family: Arial, sans-serif;
+                font-size: 24;
+                font-weight: bold;
+                border-bottom: 1px solid black;
+            }
+
+            tbody {
+                font-family: Arial, sans-serif;
+                font-size: 18;
+                font-weight: normal;
+            }
+
+            td {
+                border-right: 1px solid black;
+                padding: 6px;
+            }
+
+            th {
+                padding: 6px;
+            }
+
+            #submit {
+                font-size: 20px;
+                font-weight: bold;
+                margin-top: 20px;
+                margin-left: 36px;
+            }
+        </style>
+    </head>
+
+    <body>
+        <form method="post">
+            <table>
+                <thead>
+                    <tr>
+                        <th colspan="6">Unapproved invoices</th>
+                    </tr>
+                    <tr>
+                        <th scope="col">Company</th>
+                        <th scope="col" class="date">Invoice Date</th>
+                        <th scope="col" class="date">Due Date</th>
+                        <th scope="col" class="number">Amount Due</th>
+                        <th scope="col" class="fixed">View</th>
+                        <th scope="col" class="fixed">Approve?</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for invoice in invoices %}
+                    <tr>
+                        <td>{{ invoice["company"] }}</td>
+                        <td class="date">{{ invoice["date"] }}</td>
+                        <td class="date">{{ invoice["due_date"] }}</td>
+                        <td class="number">{{ invoice["amount_due"] }}</td>
+                        <td class="fixed"><a href="{{ invoice['url'] }}" target="_blank">View</a></td>
+                        <td class="fixed"><input type="checkbox" name="{{ invoice['blob_name'] }}" id="{{ invoice['blob_name'] }}" /></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <input type="submit" id="submit" value="Approved selected invoices" />
+        </form>
+    </body>
+</html>

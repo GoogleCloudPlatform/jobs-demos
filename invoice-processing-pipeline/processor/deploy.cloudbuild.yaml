@@ -1,0 +1,47 @@
+# Copyright 2022 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#    http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+steps:
+  - id: "Build Container Image"
+    name: "gcr.io/cloud-builders/docker:latest"
+    args: [ 'build', '-t', 'gcr.io/$PROJECT_ID/$_SERVICE_NAME:$BUILD_ID', '.' ]
+
+  - id: "Push Container Image"
+    name: "gcr.io/cloud-builders/docker:latest"
+    args: [ 'push', "gcr.io/$PROJECT_ID/$_SERVICE_NAME:$BUILD_ID"]
+
+  - id: "Deploy to Cloud Run"
+    name: "gcr.io/cloud-builders/gcloud:latest"
+    entrypoint: /bin/bash
+    args:
+      - "-c"
+      - |
+        gcloud alpha run jobs create invoice-processing \
+          --image gcr.io/$PROJECT_ID/$_SERVICE_NAME \
+          --region us-central1 \
+          --execution-environment gen2
+        
+        gcloud alpha run jobs update invoice-processing \
+          --image gcr.io/$PROJECT_ID/$_SERVICE_NAME:$BUILD_ID \
+          --region us-central1 \
+          --update-env-vars PROCESSOR_ID=$_PROCESSOR_ID \
+          --update-env-vars BUCKET=$_BUCKET 
+
+        gcloud alpha run jobs run invoice-processing --region us-central1
+
+
+substitutions:
+  _SERVICE_NAME: invoice-processor
+  _BUCKET: run-jobs-friction-invoices
+  _PROCESSOR_ID: 46bfd13ce436d58
