@@ -10,7 +10,8 @@ This repository contains a collection of samples for Jobs for various use cases.
 | ---------------------------------------- | --------------------------------------------------------------- | 
 | [Screenshot](./screenshot/)              | Create a Cloud Run job to take screenshots of web pages.        | 
 | [User Journey Replayer](./user-journeys/)| Replay recorded user journeys of your website on Cloud Run jobs.| 
-| [Invoice Processing](./invoice-processing-pipeline/)| Process invoices nightly.| 
+| [Invoice Processing](./invoice-processing-pipeline/)| Process invoices nightly from a GCS bucket.| 
+| [Parallel Processing](./parallel-processing/) | Use the Task Index and Task Count environment variables to allow parallel processing in Cloud Run Jobs. |
 
 ## Contributing changes
 
