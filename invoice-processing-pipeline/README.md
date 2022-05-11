@@ -1,7 +1,7 @@
 # Cloud Run Jobs Nightly Invoice Processing
 
 This job uses [Document AI](https://cloud.google.com/document-ai)
-the process data from human-readable invoices
+to process data from human-readable invoices
 in a variety of file formats stored in a
 [Cloud Storage](https://cloud.google.com/storage) bucket,
 and saves that data in a
@@ -13,8 +13,7 @@ The job being executed is in `processor/main.py`. That program
 calls code from the `processor/process.py` module to work with
 the Document AI and Cloud Firestore client libraries.
 
-The Dockerfile defines a basic container to run Python
-programs.
+The Dockerfile manifest defines a minimal container using the official Python image to run a single Python script.
 
 ## Prepare for the job
 
