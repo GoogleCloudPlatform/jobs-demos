@@ -36,7 +36,7 @@ section and create a new _Invoice Parser_ processor. Learn how to [Create a Docu
 * Create a bucket in the command line or the console to hold invoices to process. 
 
     ```
-    gsutil mb -l us-central1 gs://$GOOGLE_CLOUD_PROJECT-invoices
+    gsutil mb -l europe-west9 gs://$GOOGLE_CLOUD_PROJECT-invoices
     ```
 
 * New invoices should be place in a bucket folder called `incoming/` and
@@ -72,7 +72,7 @@ Google Cloud Build with the command:
 the job with the command:
 
     ```
-    gcloud run jobs create invoice-processing \
+    gcloud beta run jobs create invoice-processing \
     --image gcr.io/$GOOGLE_CLOUD_PROJECT/invoice-processor
     --region europe-west9 \
     --set-env-vars BUCKET=$BUCKET \
@@ -84,7 +84,7 @@ the job with the command:
 * Execute the job from the command line with the command:
 
     ```
-    gcloud run jobs execute invoice-processing
+    gcloud beta run jobs execute invoice-processing
     ```
 
 ## The complete pipeline
@@ -99,7 +99,7 @@ Run your job nightly with a cron job.
 
 * Give the service account access to invoke the `invoice-processing` job
   ```
-  gcloud alpha run jobs add-iam-policy-binding invoice-processing \
+  gcloud beta run jobs add-iam-policy-binding invoice-processing \
     --member serviceAccount:process-identity@$GOOGLE_CLOUD_PROJECT.iam.gserviceaccount.com \
     --role roles/run.invoker
   ```
@@ -109,7 +109,7 @@ Run your job nightly with a cron job.
   ```
   gcloud scheduler jobs create http my-job \
     --schedule="0 0 * * *" \
-    --uri="https://us-central1-run.googleapis.com/apis/run.googleapis.com/v1/namespaces/$GOOGLE_CLOUD_PROJECT/jobs/invoice-processing:run" \
+    --uri="https://europe-west9-run.googleapis.com/apis/run.googleapis.com/v1/namespaces/$GOOGLE_CLOUD_PROJECT/jobs/invoice-processing:run" \
     --http-method=POST \
     --oauth-service-account-email=process-identity@$GOOGLE_CLOUD_PROJECT.iam.gserviceaccount.com
   ```

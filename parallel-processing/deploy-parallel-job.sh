@@ -15,7 +15,7 @@
 # limitations under the License.
 
 export PROJECT_ID=$(gcloud config get project)
-export REGION=${REGION:=us-central1} # default us-centra1 region if not defined
+export REGION=${REGION:=europe-west9} # default us-centra1 region if not defined
 
 JOB_NAME=parallel-job
 NUM_TASKS=10
