@@ -7,7 +7,7 @@ See the full [codelab](https://codelabs.developers.google.com/codelabs/cloud-sta
 * Setup gcloud
 ```
 PROJECT_ID=[YOUR-PROJECT-ID]
-REGION=[YOUR-REGION]
+REGION=europe-west9
 gcloud config set core/project $PROJECT_ID
 gcloud config set run/region $REGION
 ```
@@ -44,7 +44,7 @@ gcloud projects add-iam-policy-binding $PROJECT_ID \
 
 * Create the Cloud Run job
 ```
-gcloud alpha run jobs create screenshot \
+gcloud beta run jobs create screenshot \
   --image=$REGION-docker.pkg.dev/$PROJECT_ID/containers/screenshot:v1 \
   --args="screenshot.js" \
   --args="https://example.com" \
@@ -57,10 +57,10 @@ gcloud alpha run jobs create screenshot \
 
 * Run the job
 ```
-gcloud alpha run jobs run screenshot
+gcloud beta run jobs execute screenshot
 ```
 
 * Describe the execution
 ```
-gcloud alpha run executions describe <EXECUTION_NAME>
+gcloud beta run executions describe <EXECUTION_NAME>
 ```

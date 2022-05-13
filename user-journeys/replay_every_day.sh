@@ -16,8 +16,8 @@
 
 export PROJECT_ID=$(gcloud config get-value project)
 
-# Choose us-central1 if REGION is not defined.
-export REGION=${REGION:=us-central1}
+# Choose europe-west9 if REGION is not defined.
+export REGION=${REGION:=europe-west9}
 
 echo "Replaying every day"
 
@@ -39,4 +39,4 @@ gcloud scheduler jobs create http job-runner \
     --oauth-token-scope=https://www.googleapis.com/auth/cloud-platform
 
 echo "Test that Cloud Scheduler can correctly run the Cloud Run job"
-gcloud scheduler jobs run job-runner --location "${REGION}"
+gcloud scheduler jobs execute job-runner --location "${REGION}"

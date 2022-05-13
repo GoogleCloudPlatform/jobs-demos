@@ -4,6 +4,8 @@
 
 This repository contains a collection of samples for Jobs for various use cases.
 
+**Note:** ⚠️ For preview, Cloud Run jobs are available only in the region **`europe-west9`**
+
 ## Samples
 
 |          Sample                          |                     Description                                 |
