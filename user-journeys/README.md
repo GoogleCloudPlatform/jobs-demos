@@ -5,8 +5,8 @@ This demo shows how to replay recorded user journeys of your website on Cloud Ru
 ## Record your user journeys
 
 1. Use [Chrome DevTools' Recorder](https://developer.chrome.com/docs/devtools/recorder/) to record critical user journeys for your publicly accessible website.
-1. Export the replay using DevTools' Recorder [export feature](https://developer.chrome.com/docs/devtools/recorder/#edit-flows)
-1. Save the exported `.js` file under the `journeys/` folder.
+1. Export the replay to JSON using DevTools' Recorder [export feature](https://developer.chrome.com/docs/devtools/recorder/#export-flows)
+1. Save the exported `.json` file under the `journeys/` folder.
 
 ## Before you begin
 
