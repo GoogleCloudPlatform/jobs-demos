@@ -60,10 +60,16 @@ const page = await browser.newPage();
 const recordingText = fs.readFileSync(`./journeys/${replays[taskIndex]}`, 'utf8');
 const recording = parse(JSON.parse(recordingText));
 
-console.log(`User journey ${taskIndex} running: file: ${replays[taskIndex]}, title: ${recording.title}`);
+console.log(`User journey ${taskIndex} running: ${replays[taskIndex]}`);
 const runner = await createRunner(recording, new Extension(browser, page, 7000));
-await runner.run();
-console.log(`User journey ${taskIndex} completed: ${replays[taskIndex]}`);
+const result = await runner.run();
 
-console.log('User journey runner has finished, exiting successfully')
-process.exit();
+if(result) {
+  console.log(`User journey ${taskIndex} completed successfully: ${replays[taskIndex]}`);
+  console.log('User journey runner has finished, exiting successfully')
+  process.exit();
+} else {
+  console.log(`User journey ${taskIndex} completed with errors: ${replays[taskIndex]}`);
+  console.log('User journey runner has finished, exiting with error')
+  process.exit(1);
+}
