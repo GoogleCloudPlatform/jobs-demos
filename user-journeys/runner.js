@@ -37,12 +37,7 @@ if(taskIndex > replays.length) {
   process.exit(1);
 }
 
-const browser = await puppeteer.launch({
-  headless: true,
-});
-
-const page = await browser.newPage();
-
+// Create an extension that prints at every step of the replay
 class Extension extends PuppeteerRunnerExtension {
   async beforeEachStep(step, flow) {
     await super.beforeEachStep(step, flow);
@@ -54,6 +49,13 @@ class Extension extends PuppeteerRunnerExtension {
     console.log('All steps done');
   }
 }
+
+// Start a browser and new page, needed to initialize the extension.
+// TODO: remove these lines if https://github.com/puppeteer/replay/issues/201 is fixed
+const browser = await puppeteer.launch({
+  headless: true,
+});
+const page = await browser.newPage();
 
 const recordingText = fs.readFileSync(`./journeys/${replays[taskIndex]}`, 'utf8');
 const recording = parse(JSON.parse(recordingText));
