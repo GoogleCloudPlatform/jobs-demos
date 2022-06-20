@@ -1,7 +1,8 @@
 console.log('User journey runner is started.')
 
 import fs from 'fs';
-import { createRunner, parse } from '@puppeteer/replay';
+import puppeteer from 'puppeteer';
+import { createRunner, parse, PuppeteerRunnerExtension } from '@puppeteer/replay';
 
 const journeyFolder = './journeys';
 
@@ -36,12 +37,31 @@ if(taskIndex > replays.length) {
   process.exit(1);
 }
 
+const browser = await puppeteer.launch({
+  headless: true,
+});
+
+const page = await browser.newPage();
+
+class Extension extends PuppeteerRunnerExtension {
+  async beforeEachStep(step, flow) {
+    await super.beforeEachStep(step, flow);
+    console.log('Step: ', `${step.type} ${step.url || ''}`);
+  }
+
+  async afterAllSteps(flow) {
+    await super.afterAllSteps(flow);
+    console.log('All steps done');
+  }
+}
+
 const recordingText = fs.readFileSync(`./journeys/${replays[taskIndex]}`, 'utf8');
 const recording = parse(JSON.parse(recordingText));
 
-console.log(`User journey ${taskIndex} running: ${replays[taskIndex]}`);
-const runner = await createRunner(recording);
+console.log(`User journey ${taskIndex} running: file: ${replays[taskIndex]}, title: ${recording.title}`);
+const runner = await createRunner(recording, new Extension(browser, page, 7000));
 await runner.run();
 console.log(`User journey ${taskIndex} completed: ${replays[taskIndex]}`);
 
-console.log('User journey runner has finished.')
+console.log('User journey runner has finished, exiting successfully')
+process.exit();
