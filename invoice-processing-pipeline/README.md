@@ -31,9 +31,9 @@ line.
 
     ```
     gcloud services enable \
-    firestore.googleapis.com \
-    run.googleapis.com \
-    documentai.googleapis.com
+        firestore.googleapis.com \
+        run.googleapis.com \
+        documentai.googleapis.com
     ```
 
 * Create the Firestore database: 
@@ -88,10 +88,10 @@ the job with the command:
 
     ```
     gcloud beta run jobs create invoice-processing \
-    --image gcr.io/$GOOGLE_CLOUD_PROJECT/invoice-processor
-    --region europe-west9 \
-    --set-env-vars BUCKET=$BUCKET \
-    --set-env-vars PROCESSOR_ID=$PROCESSOR_ID
+        --image gcr.io/$GOOGLE_CLOUD_PROJECT/invoice-processor \
+        --region $GOOGLE_CLOUD_REGION \
+        --set-env-vars BUCKET=$BUCKET \
+        --set-env-vars PROCESSOR_ID=$PROCESSOR_ID
     ```
     
 ## Execute the job
@@ -115,18 +115,18 @@ Run your job nightly with a cron job.
 * Give the service account access to invoke the `invoice-processing` job
   ```
   gcloud beta run jobs add-iam-policy-binding invoice-processing \
-    --member serviceAccount:process-identity@$GOOGLE_CLOUD_PROJECT.iam.gserviceaccount.com \
-    --role roles/run.invoker
+      --member serviceAccount:process-identity@$GOOGLE_CLOUD_PROJECT.iam.gserviceaccount.com \
+      --role roles/run.invoker
   ```
   Note: The job does not have a publicly available endpoint; therefore must the Cloud Scheduler Job must have permissions to invoke.
 
 * Create Cloud Scheduler Job for every day at midnight:
   ```
   gcloud scheduler jobs create http my-job \
-    --schedule="0 0 * * *" \
-    --uri="https://europe-west9-run.googleapis.com/apis/run.googleapis.com/v1/namespaces/$GOOGLE_CLOUD_PROJECT/jobs/invoice-processing:run" \
-    --http-method=POST \
-    --oauth-service-account-email=process-identity@$GOOGLE_CLOUD_PROJECT.iam.gserviceaccount.com
+      --schedule="0 0 * * *" \
+      --uri="https://${GOOGLE_CLOUD_REGION}-run.googleapis.com/apis/run.googleapis.com/v1/namespaces/${GOOGLE_CLOUD_PROJECT}/jobs/invoice-processing:run" \
+      --http-method=POST \
+      --oauth-service-account-email=process-identity@${GOOGLE_CLOUD_PROJECT}.iam.gserviceaccount.com
   ```
 
 ### Deploy supporting services
