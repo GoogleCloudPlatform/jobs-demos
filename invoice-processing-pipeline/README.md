@@ -20,23 +20,46 @@ The Dockerfile manifest defines a minimal container using the official Python im
 * Create a Google Cloud project using the console or command
 line. 
 
+* Define the project region you'll create components in: 
+
+    ```
+    GOOGLE_CLOUD_PROJECT=<>
+    GOOGLE_CLOUD_REGION=europe-west9
+    ```
+
 * Enable the Cloud Run API, Firestore API, and Cloud Document API.
 
     ```
     gcloud services enable \
-    firestore.googleapis.com \
-    run.googleapis.com \
-    documentai.googleapis.com
+        firestore.googleapis.com \
+        run.googleapis.com \
+        documentai.googleapis.com
     ```
 
-* Navigate the the
+* Create the Firestore database: 
+
+    ```
+    gcloud app create --region=$GOOGLE_CLOUD_REGION
+    gcloud firestore databases create --project $GOOGLE_CLOUD_PROJECT --region $GOOGLE_CLOUD_REGION
+    ```
+
+* Navigate to the
 [Document AI](https://console.cloud.google.com/ai/document-ai)
 section and create a new _Invoice Parser_ processor. Learn how to [Create a Document AI processor in the console](https://cloud.google.com/document-ai/docs/create-processor#create-processor).
+
+* Note the Bucket name and the Document AI Processor ID
+which will be used in the command to create the job.
+
+    ```
+    export PROCESSOR_ID=<>
+    export BUCKET=${GOOGLE_CLOUD_PROJECT}-invoices
+    ```
+
 
 * Create a bucket in the command line or the console to hold invoices to process. 
 
     ```
-    gsutil mb -l europe-west9 gs://$GOOGLE_CLOUD_PROJECT-invoices
+    gsutil mb -l $GOOGLE_CLOUD_REGION gs://${BUCKET}
     ```
 
 * New invoices should be place in a bucket folder called `incoming/` and
@@ -46,17 +69,9 @@ works well.
 
     ```
     # Copy provided example invoices to bucket
-    gsutil cp -r incoming/*.pdf gs://$GOOGLE_CLOUD_PROJECT-invoices/incoming
+    gsutil cp -r incoming/*.pdf gs://${BUCKET}/incoming
     ```
 
-* Note the Bucket name, Cloud Project ID, and the Document AI Processor ID
-which will be used in the command to create the job.
-
-    ```
-    export PROCESSOR_ID=<>
-    export GOOGLE_CLOUD_PROJECT=<>
-    export BUCKET=$GOOGLE_CLOUD_PROJECT-invoices
-    ```
 
 ## Create the Cloud Run Job
 
@@ -73,10 +88,10 @@ the job with the command:
 
     ```
     gcloud beta run jobs create invoice-processing \
-    --image gcr.io/$GOOGLE_CLOUD_PROJECT/invoice-processor
-    --region europe-west9 \
-    --set-env-vars BUCKET=$BUCKET \
-    --set-env-vars PROCESSOR_ID=$PROCESSOR_ID
+        --image gcr.io/$GOOGLE_CLOUD_PROJECT/invoice-processor \
+        --region $GOOGLE_CLOUD_REGION \
+        --set-env-vars BUCKET=$BUCKET \
+        --set-env-vars PROCESSOR_ID=$PROCESSOR_ID
     ```
     
 ## Execute the job
@@ -100,18 +115,18 @@ Run your job nightly with a cron job.
 * Give the service account access to invoke the `invoice-processing` job
   ```
   gcloud beta run jobs add-iam-policy-binding invoice-processing \
-    --member serviceAccount:process-identity@$GOOGLE_CLOUD_PROJECT.iam.gserviceaccount.com \
-    --role roles/run.invoker
+      --member serviceAccount:process-identity@$GOOGLE_CLOUD_PROJECT.iam.gserviceaccount.com \
+      --role roles/run.invoker
   ```
   Note: The job does not have a publicly available endpoint; therefore must the Cloud Scheduler Job must have permissions to invoke.
 
 * Create Cloud Scheduler Job for every day at midnight:
   ```
   gcloud scheduler jobs create http my-job \
-    --schedule="0 0 * * *" \
-    --uri="https://europe-west9-run.googleapis.com/apis/run.googleapis.com/v1/namespaces/$GOOGLE_CLOUD_PROJECT/jobs/invoice-processing:run" \
-    --http-method=POST \
-    --oauth-service-account-email=process-identity@$GOOGLE_CLOUD_PROJECT.iam.gserviceaccount.com
+      --schedule="0 0 * * *" \
+      --uri="https://${GOOGLE_CLOUD_REGION}-run.googleapis.com/apis/run.googleapis.com/v1/namespaces/${GOOGLE_CLOUD_PROJECT}/jobs/invoice-processing:run" \
+      --http-method=POST \
+      --oauth-service-account-email=process-identity@${GOOGLE_CLOUD_PROJECT}.iam.gserviceaccount.com
   ```
 
 ### Deploy supporting services
