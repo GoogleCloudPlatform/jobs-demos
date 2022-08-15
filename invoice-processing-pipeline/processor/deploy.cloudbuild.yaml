@@ -29,16 +29,16 @@ steps:
       - |
         gcloud beta run jobs create invoice-processing \
           --image gcr.io/$PROJECT_ID/$_SERVICE_NAME \
-          --region europe-west9 \
+          --region us-central1 \
           --execution-environment gen2
         
         gcloud beta run jobs update invoice-processing \
           --image gcr.io/$PROJECT_ID/$_SERVICE_NAME:$BUILD_ID \
-          --region europe-west9 \
+          --region us-central1 \
           --update-env-vars PROCESSOR_ID=$_PROCESSOR_ID \
           --update-env-vars BUCKET=$_BUCKET 
 
-        gcloud beta run jobs execute invoice-processing --region europe-west9
+        gcloud beta run jobs execute invoice-processing --region us-central1
 
 
 substitutions:

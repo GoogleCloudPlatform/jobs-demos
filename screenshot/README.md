@@ -7,7 +7,7 @@ See the full [codelab](https://codelabs.developers.google.com/codelabs/cloud-sta
 * Setup gcloud
 ```
 PROJECT_ID=[YOUR-PROJECT-ID]
-REGION=europe-west9
+REGION=us-central1
 gcloud config set core/project $PROJECT_ID
 gcloud config set run/region $REGION
 ```

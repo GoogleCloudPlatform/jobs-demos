@@ -16,8 +16,8 @@
 
 export PROJECT_ID=$(gcloud config get-value project)
 
-# Choose europe-west9 if REGION is not defined.
-export REGION=${REGION:=europe-west9}
+# Choose us-central1 if REGION is not defined.
+export REGION=${REGION:=us-central1}
 
 echo "Replaying every day"
 

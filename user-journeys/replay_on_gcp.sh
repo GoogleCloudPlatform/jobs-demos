@@ -16,8 +16,8 @@
 
 export PROJECT_ID=$(gcloud config get-value project)
 
-# Choose europe-west9 if REGION is not defined.
-export REGION=${REGION:=europe-west9}
+# Choose us-central1 if REGION is not defined.
+export REGION=${REGION:=us-central1}
 
 echo "Replaying on Google Cloud"
 
@@ -35,7 +35,7 @@ echo "Create a new Artifact Registry container repository"
 gcloud artifacts repositories create containers --repository-format=docker --location=${REGION}
 
 echo "Build this repository into a container image"
-gcloud builds submit -t europe-west9-docker.pkg.dev/${PROJECT_ID}/containers/user-journeys-demo
+gcloud builds submit -t us-central1-docker.pkg.dev/${PROJECT_ID}/containers/user-journeys-demo
 
 echo "Create a service account that has no permission, this will ensure replayed user journeys cannot access any of your Google Cloud resources"
 gcloud iam service-accounts create no-permission --description="No IAM permission"
@@ -43,7 +43,7 @@ gcloud iam service-accounts create no-permission --description="No IAM permissio
 echo "Create a Cloud Run job"
 gcloud beta run jobs create user-journeys-demo \
   --tasks $no_of_journeys \
-  --image europe-west9-docker.pkg.dev/${PROJECT_ID}/containers/user-journeys-demo:latest \
+  --image us-central1-docker.pkg.dev/${PROJECT_ID}/containers/user-journeys-demo:latest \
   --service-account no-permission@${PROJECT_ID}.iam.gserviceaccount.com
 
 echo "Run the Cloud Run job"

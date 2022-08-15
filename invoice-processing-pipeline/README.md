@@ -24,7 +24,7 @@ line.
 
     ```
     GOOGLE_CLOUD_PROJECT=<>
-    GOOGLE_CLOUD_REGION=europe-west9
+    GOOGLE_CLOUD_REGION=us-central1
     ```
 
 * Enable the Cloud Run API, Firestore API, and Cloud Document API.
