@@ -1,4 +1,4 @@
-# Cloud Run Jobs Demo Applications
+# Cloud Run Jobs demos
 
 [Cloud Run Jobs](https://cloud.google.com/run/docs/) allows you to run a container to completion without a server.
 
