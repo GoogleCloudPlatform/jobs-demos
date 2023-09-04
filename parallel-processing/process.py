@@ -19,7 +19,6 @@ import math
 import os
 import time
 
-import click
 import google.auth
 from google.cloud import storage
 
@@ -29,22 +28,22 @@ _, PROJECT_ID = google.auth.default()
 TASK_INDEX = int(os.environ.get("CLOUD_RUN_TASK_INDEX", 0))
 TASK_COUNT = int(os.environ.get("CLOUD_RUN_TASK_COUNT", 1))
 
+INPUT_BUCKET = os.environ.get("INPUT_BUCKET", f"input-{PROJECT_ID}")
+INPUT_FILE = os.environ.get("INPUT_FILE", "input_file.txt")
 
-@click.command()
-@click.argument("input_object")
-@click.option("--input_bucket", default=f"input-{PROJECT_ID}")
-def process(input_object, input_bucket):
+# Process a Cloud Storage object.
+def process():
     method_start = time.time()
 
     # Output useful information about the processing starting.
     print(
         f"Task {TASK_INDEX}: Processing part {TASK_INDEX} of {TASK_COUNT} "
-        f"for gs://{input_bucket}/{input_object}"
+        f"for gs://{INPUT_BUCKET}/{INPUT_FILE}"
     )
 
     # Download the Cloud Storage object
-    bucket = storage_client.bucket(input_bucket)
-    blob = bucket.blob(input_object)
+    bucket = storage_client.bucket(INPUT_BUCKET)
+    blob = bucket.blob(INPUT_FILE)
 
     # Split blog into a list of strings.
     contents = blob.download_as_string().decode("utf-8")
