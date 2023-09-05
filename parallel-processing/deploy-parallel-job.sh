@@ -23,8 +23,7 @@ NUM_TASKS=10
 IMAGE_NAME=gcr.io/${PROJECT_ID}/${JOB_NAME}
 
 INPUT_FILE=input_file.txt
-INPUT_BUCKET=gs://input-${PROJECT_ID}
-INPUT_OBJECT=${INPUT_BUCKET}/${INPUT_FILE}
+INPUT_BUCKET=input-${PROJECT_ID}
 
 echo "Configure gcloud to use $REGION for Cloud Run"
 gcloud config set run/region ${REGION}
@@ -38,16 +37,18 @@ echo "Build sample into a container"
 gcloud builds submit --pack image=$IMAGE_NAME
 
 echo "Creating input bucket $INPUT_BUCKET and generating random data."
-gsutil mb $INPUT_BUCKET
+gsutil mb gs://${INPUT_BUCKET}
 base64 /dev/urandom | head -c 100000 >${INPUT_FILE}
-gsutil cp $INPUT_FILE $INPUT_OBJECT
+gsutil cp $INPUT_FILE gs://${INPUT_BUCKET}/${INPUT_FILE}
 
 # Delete job if it already exists.
-gcloud beta run jobs delete ${JOB_NAME} --quiet
+gcloud run jobs delete ${JOB_NAME} --quiet
 
-echo "Creating ${JOB_NAME} using $IMAGE_NAME, $INPUT_OBJECT, in ${NUM_TASKS} tasks"
-gcloud beta run jobs create ${JOB_NAME} --execute-now \
+echo "Creating ${JOB_NAME} using $IMAGE_NAME, ${NUM_TASKS} tasks, bucket $INPUT_BUCKET, file $INPUT_FILE"
+gcloud run jobs create ${JOB_NAME} --execute-now \
     --image $IMAGE_NAME \
     --command python \
-    --args process.py,$INPUT_FILE \
-    --tasks $NUM_TASKS
+    --args process.py \
+    --tasks $NUM_TASKS \
+    --set-env-vars=INPUT_BUCKET=$INPUT_BUCKET,INPUT_FILE=$INPUT_FILE
+
