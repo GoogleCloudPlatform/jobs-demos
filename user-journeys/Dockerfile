@@ -1,4 +1,4 @@
-FROM ghcr.io/puppeteer/puppeteer:17.1.3
+FROM ghcr.io/puppeteer/puppeteer:19.0.0
 COPY package*.json ./
 RUN npm ci --omit=dev
 COPY --chown=pptruser:pptruser . .
