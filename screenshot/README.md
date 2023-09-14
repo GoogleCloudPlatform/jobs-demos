@@ -46,7 +46,6 @@ gcloud projects add-iam-policy-binding $PROJECT_ID \
 ```
 gcloud beta run jobs create screenshot \
   --image=$REGION-docker.pkg.dev/$PROJECT_ID/containers/screenshot:v1 \
-  --args="screenshot.js" \
   --args="https://example.com" \
   --args="https://cloud.google.com" \
   --tasks=2 \
