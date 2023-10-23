@@ -87,7 +87,7 @@ Google Cloud Build with the command:
 the job with the command:
 
     ```
-    gcloud beta run jobs create invoice-processing \
+    gcloud run jobs create invoice-processing \
         --image gcr.io/$GOOGLE_CLOUD_PROJECT/invoice-processor \
         --region $GOOGLE_CLOUD_REGION \
         --set-env-vars BUCKET=$BUCKET \
@@ -99,7 +99,7 @@ the job with the command:
 * Execute the job from the command line with the command:
 
     ```
-    gcloud beta run jobs execute invoice-processing
+    gcloud run jobs execute invoice-processing
     ```
 
 ## The complete pipeline
@@ -114,7 +114,7 @@ Run your job nightly with a cron job.
 
 * Give the service account access to invoke the `invoice-processing` job
   ```
-  gcloud beta run jobs add-iam-policy-binding invoice-processing \
+  gcloud run jobs add-iam-policy-binding invoice-processing \
       --member serviceAccount:process-identity@$GOOGLE_CLOUD_PROJECT.iam.gserviceaccount.com \
       --role roles/run.invoker
   ```
