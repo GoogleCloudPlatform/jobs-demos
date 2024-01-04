@@ -41,11 +41,11 @@ echo "Create a service account that has no permission, this will ensure replayed
 gcloud iam service-accounts create no-permission --description="No IAM permission"
 
 echo "Create a Cloud Run job"
-gcloud beta run jobs create user-journeys-demo \
+gcloud run jobs create user-journeys-demo \
   --tasks $no_of_journeys \
   --image us-central1-docker.pkg.dev/${PROJECT_ID}/containers/user-journeys-demo:latest \
   --service-account no-permission@${PROJECT_ID}.iam.gserviceaccount.com \
   --memory 1Gi
 
 echo "Run the Cloud Run job"
-gcloud beta run jobs execute user-journeys-demo
+gcloud run jobs execute user-journeys-demo
