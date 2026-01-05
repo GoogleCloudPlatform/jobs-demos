@@ -37,9 +37,9 @@ echo "Build sample into a container"
 gcloud builds submit --pack image=$IMAGE_NAME
 
 echo "Creating input bucket $INPUT_BUCKET and generating random data."
-gsutil mb gs://${INPUT_BUCKET}
+gcloud storage buckets create gs://${INPUT_BUCKET}
 base64 /dev/urandom | head -c 100000 >${INPUT_FILE}
-gsutil cp $INPUT_FILE gs://${INPUT_BUCKET}/${INPUT_FILE}
+gcloud storage cp $INPUT_FILE gs://${INPUT_BUCKET}/${INPUT_FILE}
 
 # Delete job if it already exists.
 gcloud run jobs delete ${JOB_NAME} --quiet
@@ -51,4 +51,3 @@ gcloud run jobs create ${JOB_NAME} --execute-now \
     --args process.py \
     --tasks $NUM_TASKS \
     --set-env-vars=INPUT_BUCKET=$INPUT_BUCKET,INPUT_FILE=$INPUT_FILE
-

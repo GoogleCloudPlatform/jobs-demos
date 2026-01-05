@@ -59,7 +59,7 @@ which will be used in the command to create the job.
 * Create a bucket in the command line or the console to hold invoices to process. 
 
     ```
-    gsutil mb -l $GOOGLE_CLOUD_REGION gs://${BUCKET}
+    gcloud storage buckets create gs://${BUCKET} --location=$GOOGLE_CLOUD_REGION
     ```
 
 * New invoices should be place in a bucket folder called `incoming/` and
@@ -69,7 +69,7 @@ works well.
 
     ```
     # Copy provided example invoices to bucket
-    gsutil cp -r incoming/*.pdf gs://${BUCKET}/incoming
+    gcloud storage cp --recursive incoming/*.pdf gs://${BUCKET}/incoming
     ```
 
 
