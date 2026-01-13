@@ -59,13 +59,13 @@ def handle_uploads():
     handled = 0
     for key in request.files:
         for file in request.files.getlist(key):
-            if uploaded_to_storage(file, bucket):
-                handled += 1
+            upload_to_storage(file, bucket)
+            handled += 1
 
     return f"Uploaded {handled} file(s)", 200
 
 
-def uploaded_to_storage(file, bucket):
+def upload_to_storage(file, bucket):
     mimetype = file.mimetype
     if mimetype is None:
         mimetype = "application/octet-stream"
@@ -75,8 +75,6 @@ def uploaded_to_storage(file, bucket):
     blob.content_type = mimetype
 
     blob.upload_from_file(file.stream)
-
-    return True
 
 
 if __name__ == "__main__":
